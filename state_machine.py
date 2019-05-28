@@ -24,7 +24,7 @@ class StateMachine():
         return final_state
 
     def check_final_state(self,final_state): #check if final state is accepted
-        accept_prob = int(abs(np.dot(np.transpose(self.receiving_states), final_state)) ** 2)
+        accept_prob = abs(np.dot(np.transpose(self.receiving_states), final_state)) ** 2
         return accept_prob
 
     def transfer(self,word):
