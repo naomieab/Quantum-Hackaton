@@ -10,42 +10,30 @@ import numpy as np
 from qiskit import *
 from qiskit import BasicAer
 
+from state_machine import StateMachine
 
 
-class QuantumStateMachine : 
-    def __init__(self):
-        pass
-    
-    def circuit(self, word):
-        matrix_array = init_run(word)
+class QuantumStateMachine(StateMachine) :
+
+    def prep_machine(self,matrices): #flip matrix order for math..
         q = QuantumRegister(2, 'q')
+        # TODO set start state with unitary operator
         circ = QuantumCircuit(q)
-        for matrix_product in matrix_array:
-            for matrix in matrix_product:
-                circ.unitary(matrix)
+        for matrix in matrices:
+            circ.unitary(matrix, q)
         circ.draw()
+        return circ
+
+    def run_machine(self, circ): #multiply matrices and get final state
         backend = BasicAer.get_backend('statevector_simulator')
         job = execute(circ, backend)
         result = job.result()
         outputstate = result.get_statevector(circ, decimals=3)
-        print(outputstate)
-        pass
-    
-#a = np.matrix('1 0; 0 1')
+        return outputstate
 
-matrix = [np.array([[1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 1, 0],[0, 0, 0, 1]]), 
-          np.array([[0, 0, 0, 1],[0, 0, 1, 0],[0, 1, 0, 0],[1, 0, 0, 0]])]     
-q = QuantumRegister(2, 'q')
-circ = QuantumCircuit(q)
-for matric in matrix:
-   circ.unitary(matric, q)
-circ.draw()
+    def check_final_state(self,final_state): #check if final state is accepted
+        accept_prob = int(abs(np.dot(final_state, self.receiving_states)) ** 2)
+        return accept_prob
 
-#q[0]=0
-#q[1]=0
-backend = BasicAer.get_backend('statevector_simulator')
-job=execute(circ, backend)
-result = job.result()
 
-outputstate = result.get_statevector(circ, decimals=3)
-print(outputstate)
+
