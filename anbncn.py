@@ -1,7 +1,7 @@
 import numpy as np
 import state_machine as sm
 
-z = (np.pi) / 10
+z = (np.pi) * np.sqrt(2)
 
 Rx = np.array([[1, 0, 0, 0],
                 [0, np.cos(z), -np.sin(z), 0],
