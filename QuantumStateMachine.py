@@ -19,6 +19,7 @@ class QuantumStateMachine(StateMachine) :
         q = QuantumRegister(2, 'q')
         # TODO set start state with unitary operator
         circ = QuantumCircuit(q)
+        circ.h(q[1])
         for matrix in matrices:
             circ.unitary(matrix, q)
         circ.draw()
@@ -32,7 +33,7 @@ class QuantumStateMachine(StateMachine) :
         return outputstate
 
     def check_final_state(self,final_state): #check if final state is accepted
-        accept_prob = int(abs(np.dot(final_state, self.receiving_states)) ** 2)
+        accept_prob = float(abs(np.dot(final_state, self.receiving_states)) ** 2)
         return accept_prob
 
 

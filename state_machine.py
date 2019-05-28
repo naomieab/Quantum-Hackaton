@@ -24,14 +24,15 @@ class StateMachine():
         final_state = result @ self.init_state
         return final_state
 
+
     def check_final_state(self,final_state): #check if final state is accepted
         accept_prob = abs(np.dot(np.transpose(self.receiving_states), final_state)) ** 2
         return accept_prob
 
     def transfer(self,word):
         matrices = self.prep_run(word)
-        matrices = self.prep_machine(matrices)
-        final_state = self.run_machine(matrices)
+        machine = self.prep_machine(matrices)
+        final_state = self.run_machine(machine)
         prob = self.check_final_state(final_state)
         if prob >= self.cutoff:
             return 1, prob
