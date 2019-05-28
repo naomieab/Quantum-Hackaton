@@ -16,7 +16,7 @@ class StateMachine():
         return matrices[::-1]
 
     def run_machine(self,matrices): #multiply matrices and get final state
-        result = np.identity(self.num_states)
+        result = np.identity(2**self.num_states)
         matrices = self.prep_machine(matrices)
         for m in matrices:
             result = result @ m
