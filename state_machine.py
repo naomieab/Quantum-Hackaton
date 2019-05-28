@@ -2,11 +2,12 @@ import numpy as np
 
 class StateMachine():
 
-    def __init__(self, dict, num_states, init_state, receiving_states):
-        self.dict = dict
+    def __init__(self, dict, num_states, init_state, receiving_states, cutoff):
+        self.dict = dict #dictionary for letter:matrix
         self.num_states = num_states
         self.init_state = init_state
         self.receiving_states = receiving_states
+        self.cutoff = cutoff
 
     def prep_run(self,word): #matrix list for word
         matrices = [self.dict[letter] for letter in word]
@@ -32,15 +33,11 @@ class StateMachine():
         matrices = self.prep_machine(matrices)
         final_state = self.run_machine(matrices)
         prob = self.check_final_state(final_state)
-        return prob
+        if prob >= self.cutoff:
+            return 1, prob
+        else:
+            return 0, prob
 
-    # def transfer(self,word):
-    #     final_matrix = self.init_run(word)
-    #     final_state = final_matrix @ self.init_state
-    #     a = np.transpose(self.receiving_states)
-    #     accept_prob = int(abs(np.dot(np.transpose(self.receiving_states),final_state))**2)
-    #
-    #     return accept_prob
 
 
 
