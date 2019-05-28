@@ -14,6 +14,7 @@ u_b = np.array([[np.cos(-z), -np.sin(-z), 0, 0],
                 [0, 0, 1, 0],
                 [0, 0, 0, 1]])
 
+
 init_state = [[1],[0],[0],[0]]
 receiving_state = [[1],[0],[0],[0]]
 word = np.array([0,1,0,1,0]) #example word
