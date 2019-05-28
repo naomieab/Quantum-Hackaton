@@ -40,3 +40,12 @@ circ = QuantumCircuit(q)
 for matric in matrix:
    circ.unitary(matric, q)
 circ.draw()
+
+#q[0]=0
+#q[1]=0
+backend = BasicAer.get_backend('statevector_simulator')
+job=execute(circ, backend)
+result = job.result()
+
+outputstate = result.get_statevector(circ, decimals=3)
+print(outputstate)
