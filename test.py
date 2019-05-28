@@ -6,7 +6,7 @@ u_0 = np.array([[0, 1], [1, 0]])
 
 init_state = [[1],[0]]
 receiving_state = [[1],[0]]
-word = np.array([0]) #example word
+word = np.array([1,1]) #example word
 dicti = {0: u_0, 1: u_1}
 num_states = 2
 

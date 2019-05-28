@@ -19,11 +19,11 @@ class StateMachine():
 
     def transfer(self,word):
         final_matrix = self.init_run(word)
-        for state in self.receiving_states:
-            if final_matrix[self.init_state, state] == 1:
-                return 1
-            else:
-                return 0
+        final_state = final_matrix @ self.init_state
+        a = np.transpose(self.receiving_states)
+        accept_prob = int(abs(np.dot(np.transpose(self.receiving_states),final_state))**2)
+
+        return accept_prob
 
 
 
